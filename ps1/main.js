@@ -3,7 +3,10 @@ let score = 0;
 // Write code that *every second*, picks a random unwhacked hole (use getRandomUnwhackedHoleId)
 // and adds the "needs-whack" class
 const interval = setInterval(() => {
-    console.log('TODO: Add the "needs-whack" class to a random hole');
+    const randomHoleId = getRandomUnwhackedHoleId();
+    if (randomHoleId) {
+        document.getElementById(randomHoleId).classList.add('needs-whack');
+    }
 }, 1000);
 
 for(const id of getAllHoleIds()) {
@@ -13,7 +16,26 @@ for(const id of getAllHoleIds()) {
     //          2. Add the "animating-whack" class *for 500 milliseconds*
     //          3. Increment the score by 1 (and update the score display)
     //          4. If the score is 45 or higher, stop the game (by clearing the interval)
-    console.log(`TODO: Add a click listener for #${id} here`);
+    document.getElementById(id).addEventListener('click', () => {
+        const hole = document.getElementById(id);
+        
+        if (hole.classList.contains('needs-whack')) {
+            hole.classList.remove('needs-whack');
+            
+            hole.classList.add('animating-whack');
+            setTimeout(() => {
+                hole.classList.remove('animating-whack');
+            }, 500);
+
+            score++;
+            
+            document.getElementById('score').textContent = `Score: ${score}`;
+            
+            if (score >= 45) {
+                clearInterval(interval);
+            }
+        }
+    });
 }
 
 /**
