@@ -46,6 +46,36 @@ getRandomAnswer((answer) => {
 // 3. Append the guess's <div> element to the existing <div> with ID 'guesses'
 // 4. Try it out by calling displayGuessFeedback('hello') and displayGuessFeedback('world')
 // 
+function displayGuessFeedback(guess) {
+    const guessDiv = document.createElement('div');
+    guessDiv.className = 'guess';
+    
+    for(let i = 0; i < guess.length; i++) {
+        const letter = guess[i].toUpperCase();
+        const correctLetter = correctAnswer[i].toUpperCase();
+        
+        const letterSpan = document.createElement('span');
+        letterSpan.className = 'letter';
+        letterSpan.textContent = letter;
+        
+        if(letter === correctLetter) {
+            letterSpan.classList.add('correct');
+        } else if(correctAnswer.toUpperCase().includes(letter)) {
+            letterSpan.classList.add('present');
+        } else {
+            letterSpan.classList.add('absent');
+        }
+        
+        guessDiv.appendChild(letterSpan);
+    }
+    
+    document.querySelector('#guesses').appendChild(guessDiv);
+}
+
+
+
+
+
 // Step 2: Add an event listener to the input element that listens for the 'keydown' event.
 // 1. When the user presses the 'Enter' key, the event listener should:
 //     1.a. Get the value of the input element (which is the guess)
@@ -58,3 +88,33 @@ getRandomAnswer((answer) => {
 //              1.d.ii.A If the guess is a valid word, display feedback for the guess (using the displayGuessFeedback function from Step 1)
 //              1.d.ii.B If the guess is not a valid word, show an error message: "{guess} is not a valid word." (where {guess} is the value of the guess)
 // 2. When the user presses key other than 'Enter', clear the info message (using the clearInfoMessage function)
+
+inputEl.addEventListener('keydown', (event) => {
+    if(event.key !== 'Enter') {
+        clearInfoMessage();
+        return;
+    }
+    
+    const guess = inputEl.value;
+    
+    if(guess.length !== WORD_LENGTH) {
+        showInfoMessage(`Your guess must be ${WORD_LENGTH} letters long.`);
+        return;
+    }
+    
+    if(guess.toLowerCase() === correctAnswer.toLowerCase()) {
+        showInfoMessage(`You win! The answer was "${correctAnswer}"`);
+        inputEl.setAttribute('disabled', true);
+        return;
+    }
+    
+    inputEl.value = '';
+    
+    isValidWord(guess, (isValid) => {
+        if(isValid) {
+            displayGuessFeedback(guess);
+        } else {
+            showInfoMessage(`${guess} is not a valid word.`);
+        }
+    });
+});
