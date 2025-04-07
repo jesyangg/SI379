@@ -1,4 +1,3 @@
-
 const state = {
     tasks: [],
     currentTimer: null,
@@ -21,6 +20,34 @@ const tasksList = document.getElementById('tasks-list');
 const cancelButton = document.querySelector('.btn-cancel');
 const currentTaskNameElement = document.getElementById('current-task-name');
 
+
+// Add this function to play the completion sound
+function playCompletionSound() {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    // Connect the nodes
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    // Set the sound parameters
+    oscillator.type = 'sine'; // Sine wave - smooth sound
+    oscillator.frequency.value = 800; // Higher frequency for work completion
+    gainNode.gain.value = 0.3; // Lower volume to avoid being too jarring
+    
+    // Schedule the sound (short beep pattern)
+    oscillator.start();
+    
+    // Create a beep pattern (two beeps)
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.setValueAtTime(0, audioContext.currentTime + 0.15);
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime + 0.3);
+    gainNode.gain.setValueAtTime(0, audioContext.currentTime + 0.45);
+    
+    // Stop the oscillator after the pattern completes
+    oscillator.stop(audioContext.currentTime + 0.5);
+}
 
 function showConfetti() {
     const colors = ['#fdbb2d', '#22c55e', '#f9fafb'];
@@ -151,6 +178,9 @@ function startTimer() {
             updateTimerDisplay();
         } else {
             clearInterval(state.currentTimer);
+            
+            // Play sound when timer completes
+            playCompletionSound();
             
             if (state.isWorking) {
                 completeWorkSession();
