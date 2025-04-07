@@ -1,0 +1,456 @@
+:root {
+    --primary: #fdbb2d;
+    --secondary: #22c55e;
+    --dark: #333;
+    --light: #f9fafb;
+    --danger: #ef4444;
+    --muted: #6b7280;
+    --transition-speed: 0.3s;
+    --transition-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #fff6ea;
+    color: var(--dark);
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: all var(--transition-speed) var(--transition-function);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--dark);
+}
+
+.settings {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    transition: all var(--transition-speed) var(--transition-function);
+}
+
+.settings-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 80px;
+    transition: border var(--transition-speed) var(--transition-function),
+                box-shadow var(--transition-speed) var(--transition-function);
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(253, 187, 45, 0.2);
+}
+
+.timer-container {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    opacity: 1;
+    transform: translateY(0);
+    transition: all var(--transition-speed) var(--transition-function),
+                opacity var(--transition-speed) var(--transition-function),
+                transform 0.4s var(--transition-function);
+}
+
+.app-state-idle .timer-container {
+    display: none;
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.app-state-working .timer-container {
+    background-color: rgba(253, 187, 45, 0.1);
+    border: 2px solid var(--primary);
+}
+
+.app-state-break .timer-container {
+    background-color: rgba(34, 197, 94, 0.1);
+    border: 2px solid var(--secondary);
+}
+
+.timer-display {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 10px 0;
+    transition: color var(--transition-speed) var(--transition-function);
+}
+
+.app-state-working .timer-display {
+    color: var(--primary);
+}
+
+.app-state-break .timer-display {
+    color: var(--secondary);
+}
+
+.timer-label {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.timer-task {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.timer-message {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.work-elements, .break-elements {
+    opacity: 1;
+    transition: opacity var(--transition-speed) var(--transition-function);
+}
+
+.app-state-working .break-elements,
+.app-state-break .work-elements,
+.app-state-idle .work-elements,
+.app-state-idle .break-elements {
+    display: none;
+    opacity: 0;
+}
+
+.timer-buttons {
+    margin-top: 15px;
+}
+
+button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all var(--transition-speed) var(--transition-function),
+                transform 0.2s var(--transition-function);
+}
+
+button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.btn-cancel {
+    background-color: var(--danger);
+    color: white;
+}
+
+.add-task-container {
+    display: flex;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+#new-task-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border var(--transition-speed) var(--transition-function),
+                box-shadow var(--transition-speed) var(--transition-function);
+}
+
+#new-task-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(253, 187, 45, 0.2);
+}
+
+.btn-add {
+    background-color: var(--primary);
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+
+.tasks-container {
+    margin-top: 20px;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background-color: white;
+    transition: all var(--transition-speed) var(--transition-function),
+                transform 0.3s var(--transition-function),
+                box-shadow 0.3s var(--transition-function);
+    animation: fadeIn 0.5s var(--transition-function);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.task-item:hover {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.task-description {
+    flex-grow: 1;
+    margin-right: 15px;
+}
+
+.task-description span {
+    word-break: break-word;
+}
+
+.task-description input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border var(--transition-speed) var(--transition-function),
+                box-shadow var(--transition-speed) var(--transition-function);
+}
+
+.task-description input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(253, 187, 45, 0.2);
+}
+
+.task-lemons {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    font-weight: 600;
+}
+
+.lemon {
+    color: var(--primary);
+    margin-left: 5px;
+    font-size: 1.2rem;
+    transition: transform 0.3s var(--transition-function);
+}
+
+.task-item:hover .lemon {
+    transform: rotate(15deg);
+}
+
+.task-actions {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.task-actions button {
+    opacity: 0.85;
+    transition: opacity var(--transition-speed) var(--transition-function),
+                transform 0.2s var(--transition-function);
+}
+
+.task-actions button:hover {
+    opacity: 1;
+}
+
+.btn-start {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-remove {
+    background-color: var(--danger);
+    color: white;
+}
+
+.btn-edit {
+    background-color: var(--dark);
+    color: white;
+}
+
+.btn-save {
+    background-color: var(--secondary);
+    color: white;
+}
+
+.app-state-working .btn-start,
+.app-state-break .btn-start {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.no-tasks-message {
+    text-align: center;
+    color: var(--muted);
+    padding: 20px;
+    font-style: italic;
+    animation: fadeIn 0.8s var(--transition-function);
+}
+
+.editing .task-description span {
+    display: none;
+}
+
+.task-item:not(.editing) .task-description input,
+.task-item:not(.editing) .btn-save {
+    display: none;
+}
+
+.editing .btn-edit,
+.editing .btn-start {
+    display: none;
+}
+
+.editing {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(253, 187, 45, 0.15);
+}
+
+.app-state-transition {
+    transition: all 0.5s var(--transition-function);
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    transition: opacity var(--transition-speed) var(--transition-function);
+}
+
+@media (max-width: 600px) {
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .task-description {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    
+    .task-lemons {
+        margin-bottom: 10px;
+    }
+    
+    .task-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+.task-item:not(.editing) .edit-only {
+    display: none;
+}
+
+.editing .normal-only {
+    display: none;
+}
+
+.task-settings {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+    padding-top: 5px;
+}
+
+.task-duration-setting {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.task-duration-setting label {
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.task-timer-info {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    margin-right: 20px;
+}
+
+.task-lemons {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    margin-left: 20px; 
+    font-weight: 600;
+}
+
+input.invalid {
+    border-color: var(--danger) !important;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
+}
+
+@media (max-width: 600px) {
+    .task-settings {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+.btn-cancel-edit {
+    background-color: #6b7280; /* Gray color */
+    color: white;
+}
+
+/* Hide cancel edit button in normal mode */
+.task-item:not(.editing) .btn-cancel-edit {
+    display: none;
+}
+
+/* Hide remove button in edit mode */
+.editing .btn-remove {
+    display: none;
+}
