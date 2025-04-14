@@ -1,0 +1,118 @@
+:root {
+    --row-height: 40px;
+    --picker-width: 300px;
+  }
+  
+  .App {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  #cheating-mode {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+  
+  #target-color, #guess-color {
+    width: var(--picker-width);
+    height: 150px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  
+  #guess-color {
+    margin-top: 0;
+  }
+  
+  #color-picker {
+    display: table;
+    width: var(--picker-width);
+    margin: auto;
+    margin-top: 30px;
+  }
+  
+  #color-picker > .row {
+    display: table-row;
+    height: var(--row-height);
+    margin-bottom: 15px;
+  }
+  
+  #color-picker > .row > .component-color-preview {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 3px;
+    padding-right: 10px;
+    text-align: right;
+    font-weight: bold;
+    width: 70px;
+  }
+  
+  #color-picker input[type="number"] {
+    width: 60px;
+    height: 30px;
+    text-align: center;
+    margin-right: 10px;
+  }
+  
+  #color-picker input[type="range"] {
+    position: relative;
+    top: 5px;
+    width: 180px;
+  }
+  
+  .feedback {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .guess-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .guess-button:hover {
+    background-color: #45a049;
+  }
+  
+  button {
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px;
+  }
+  
+  button:hover {
+    background-color: #0b7dda;
+  }
+
+  .slider-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  #color-picker input[type="range"] {
+    position: relative;
+    width: 130px;
+  }
+  
+  #color-picker input[type="number"] {
+    width: 60px;
+    height: 30px;
+    text-align: center;
+  }
